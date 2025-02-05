@@ -40,4 +40,3 @@ Temp_max <- max(airquality[,4],na.rm=TRUE)
 
 
 
-
