@@ -13,11 +13,31 @@ missingValues_df <-data.frame(matrix(NA,nrow=number_of_missing_cases, ncol=numbe
 colnames(missingValues_df)<-colnames(airquality_matrix)
 missingValues_df
 
-
+index<-1
 for(i in 1:nrow(airquality)){
-  if(!complete.cases(airquality)){
+  if(!complete.cases(airquality[i,])){
+    missingValues_df[index,]<-airquality[i,]
+    index<<-index+1
     
   }
 }
+index<-1
+missingValues_df
+
+#--------------------------------------------------------------------------------
+
+#---mean, min, standard deviation, max for ozone and temperature---#
+
+Ozone_mean <- mean(airquality[,1],,na.rm=TRUE)
+Ozone_sd<-sd(airquality[,1],na.rm=TRUE)
+Ozone_min <- min(airquality[,1],na.rm=TRUE)
+Ozone_max <- max(airquality[,1],na.rm=TRUE)
+
+Temp_mean <- mean(airquality[,4],na.rm=TRUE)
+Temp_sd <- sd(airquality[,4],na.rm=TRUE)
+Temp_min <- min(airquality[,4],na.rm=TRUE)
+Temp_max <- max(airquality[,4],na.rm=TRUE)
+
+
 
 
