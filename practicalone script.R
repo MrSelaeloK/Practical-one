@@ -39,9 +39,16 @@ Temp_min <- min(airquality[,4],na.rm=TRUE)
 Temp_max <- max(airquality[,4],na.rm=TRUE)
 
 #---Question 3 ---#
-beta_coefficient <- (t(cars[,1])%*%cars[,1])^-1 %*% t(cars[,1]) %*% cars[,2]
-beta_coefficient
-#---Question 4 ---#
+intercept_vector<-rep(1,nrow(cars))
 
+X<-as.matrix(cbind(intercept_vector,cars[1]))
+Y<-as.matrix(cars[,2])
+
+
+beta_coefficients <- ((t(X)%*%X)^-1) %*% ((t(X) %*% Y))
+
+
+beta_coefficients
+#---Question 4 ---#
 cars
-lm(cars)
+lm(cars[,2]~cars[,1])
