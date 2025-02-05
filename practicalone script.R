@@ -12,3 +12,12 @@ airquality_matrix<-as.matrix(airquality)
 missingValues_df <-data.frame(matrix(NA,nrow=number_of_missing_cases, ncol=number_of_columns))
 colnames(missingValues_df)<-colnames(airquality_matrix)
 missingValues_df
+
+
+for(i in 1:nrow(airquality)){
+  if(!complete.cases(airquality)){
+    
+  }
+}
+
+
