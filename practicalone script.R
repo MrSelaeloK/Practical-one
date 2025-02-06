@@ -45,8 +45,8 @@ X<-as.matrix(cbind(intercept_vector,cars[1]))
 Y<-as.matrix(cars[,2])
 
 
-beta_coefficients <- ((t(X)%*%X)^-1) %*% ((t(X) %*% Y))
-
+#beta_coefficients <- ((t(X)%*%X)^-1) %*% t(X) %*% Y
+beta_coefficients <- solve(t(X)%*%X) %*% (t(X)%*%Y)
 
 beta_coefficients
 #---Question 4 ---#
