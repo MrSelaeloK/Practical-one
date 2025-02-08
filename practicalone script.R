@@ -66,15 +66,57 @@ cat(paste0(ozone_output,"\n\n",temperature_output))
 
 #---Question 3 ---#
 intercept<-rep(1,nrow(cars))
-X<-as.matrix(cbind(intercept,(cars[,1])))
+X<-as.matrix(cars[,1])
 Y<-as.matrix(cars[,2])
 
 f<-function(X,Y){
-  beta_coefficients <- solve(t(X)%*%X) %*% (t(X)%*%Y)
-  colnames(beta_coefficients)<-"Coefficients"
-  return(list(beta_coefficients))
+#beta coefficients  
+X<-as.matrix(cbind(intercept,(cars[,1])))
+beta_coefficients <- solve(t(X)%*%X) %*% (t(X)%*%Y)
+
+#std errors
+error<-Y-(X%*%beta_coefficients)
+n_p<-nrow(cars)-ncol((cars))
+variance_estimate<-(t(error)%*%error)/(n_p)
+variance_estimate
+Covariance_beta<- as.numeric(variance_estimate)*(solve(t(X)%*%X))
+std_err<-sqrt(diag(Covariance_beta))
+
+#T stats
+T_stats<-matrix(NA,ncol=1,nrow=2)
+
+#matrices
+coefficients<-as.matrix(beta_coefficients)
+standarderror<-as.matrix(std_err)
+T_stats<-coefficients/standarderror
+
+#P-values
+p_values<-matrix(NA,nrow=2,ncol=1)
+T_stats[1,1]
+p_1<-pt(as.numeric(abs(T_stats[1,1])),
+        48,
+        lower.tail=FALSE)
+p_2<-pt(as.numeric(abs(T_stats[2,1])),
+        48,
+        lower.tail=FALSE)
+
+p_values[1,1]<-p_1*2
+p_values[2,1]<-p_2*2
+p_values
+
+#changing of row names and column names
+rownames(coefficients)<-c("intercept","Slope")
+colnames(coefficients)<-"Coefficients"
+colnames(standarderror)<-"std_err"
+colnames(T_stats)<-"T-stat"
+colnames(p_values)<-"p values"
+
+return(cbind(coefficients,
+             standarderror,
+             T_stats,p_values))
 }
-f(X,Y)
+f(X,Y) 
+  
 #---Question 4 ---#
 a<-lm(cars[,2]~cars[,1])
 summary(a)
