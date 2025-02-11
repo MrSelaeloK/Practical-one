@@ -3,12 +3,18 @@ airquality
 #---number of missing data rows and number of total columns in the air quality database---#
 number_of_missing_cases <- sum(!complete.cases(airquality))
 number_of_columns<-ncol(airquality)
-print(paste("missing values data frame will have ",number_of_missing_cases," rows and ",number_of_columns," columns"))
+print(paste("missing values data frame will have ",
+            number_of_missing_cases,
+            " rows and ",
+            number_of_columns,
+            " columns"))
 
 #---data frame with size = to number rows with missing values---#
 # names of headings also set to match #
 airquality_matrix<-as.matrix(airquality)
-missingValues_df <-data.frame(matrix(NA,nrow=number_of_missing_cases, ncol=number_of_columns))
+missingValues_df <-data.frame(matrix(NA,
+                                     nrow=number_of_missing_cases,
+                                     ncol=number_of_columns))
 colnames(missingValues_df)<-colnames(airquality_matrix)
 missingValues_df
 
@@ -23,8 +29,7 @@ for(i in 1:nrow(airquality)){
 index<-1
 missingValues_df
 
-#--------------------------------------------------------------------------------
-
+#Question 2
 #---mean, min, standard deviation, max for ozone and temperature---#
 
 Ozone_mean <- mean(airquality[,1],
@@ -78,12 +83,13 @@ beta_coefficients <- solve(t(X)%*%X) %*% (t(X)%*%Y)
 error<-Y-(X%*%beta_coefficients)
 n_p<-nrow(cars)-ncol((cars))
 variance_estimate<-(t(error)%*%error)/(n_p)
-variance_estimate
 Covariance_beta<- as.numeric(variance_estimate)*(solve(t(X)%*%X))
 std_err<-sqrt(diag(Covariance_beta))
 
 #T stats
-T_stats<-matrix(NA,ncol=1,nrow=2)
+T_stats<-matrix(NA,
+                ncol=1,
+                nrow=2)
 
 #matrices
 coefficients<-as.matrix(beta_coefficients)
@@ -102,7 +108,7 @@ p_2<-pt(as.numeric(abs(T_stats[2,1])),
 
 p_values[1,1]<-p_1*2
 p_values[2,1]<-p_2*2
-p_values
+
 
 #changing of row names and column names
 rownames(coefficients)<-c("intercept","Slope")
